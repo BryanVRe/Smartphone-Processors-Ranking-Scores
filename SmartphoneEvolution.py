@@ -23,9 +23,9 @@ def load_data_name(name):
     return filtrar_data_nombre
 
 @st.cache
-def load_data_smartphone(Smartphone):
+def load_data_smartphone(smartphone):
     data = load_data(500)
-    filtrar_data_smartphone = data[data['Smartphone'] == Smartphone]
+    filtrar_data_smartphone = data[data['smartphone'] == smartphone]
     return filtrar_data_smartphone
 
 
@@ -36,7 +36,7 @@ agree = sidebar.checkbox("Mostrar todos los dispositivos")
 titulo = sidebar.text_input('Nombre del dispositivo:')
 btnFiltrarDirectorFilm = sidebar.button('Buscar dispositivo')
 data = load_data(500)
-selected = sidebar.selectbox("Seleccionar marca de dispositivo", data['Smartphone'].unique())
+selected = sidebar.selectbox("Seleccionar marca de dispositivo", data['smartphone'].unique())
 btnFiltrarDirector = sidebar.button('Filtrar por marca')
 
 if agree:
