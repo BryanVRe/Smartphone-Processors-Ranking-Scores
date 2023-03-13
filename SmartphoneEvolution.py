@@ -5,7 +5,7 @@ import re
 #st.title('NETFLIX SIMULATOR')
 #st.subheader('Bryan Valerio Reyes')
 #st.write('ZS20006768')
-st.markdown("<h1 style='text-align: center; color: PINK;'>SMARTPHONES</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: blue;'>SMARTPHONES</h1>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: black;'>Bryan Valerio Reyes</h3>", unsafe_allow_html=True)
 st.markdown("<h3 style='text-align: center; color: black;'>zs20006768</h3>", unsafe_allow_html=True)
 
