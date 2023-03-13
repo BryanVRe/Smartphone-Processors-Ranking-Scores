@@ -1,60 +1,55 @@
 import pandas as pd
+import numpy as np
 import streamlit as st
+import codecs
 import re
-
-#st.title('NETFLIX SIMULATOR')
-#st.subheader('Bryan Valerio Reyes')
-#st.write('ZS20006768')
-st.markdown("<h1 style='text-align: center; color: blue;'>SMARTPHONES</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: black;'>Bryan Valerio Reyes</h3>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: black;'>zs20006768</h3>", unsafe_allow_html=True)
 
 DATA_URL = 'https://raw.githubusercontent.com/BryanVRe/Smartphone-Processors-Ranking-Scores/master/Smartphone_Evolution.csv'
 
+
+COLUMNA = 'started_at'
+
+st.markdown("<h1 style='text-align: center; color: blue;'>CITIBIKE</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: black;'>Bryan Valerio Reyes</h3>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: black;'>zs20006768</h3>", unsafe_allow_html=True)
+sidebar = st.sidebar
+
+
 @st.cache
-def load_data(nrows):
+def cargar_data(nrows):
     data = pd.read_csv(DATA_URL, nrows=nrows, encoding_errors='ignore')
+    lowercase = lambda x: str(x).lower()
+    data.rename(lowercase, axis='columns', inplace=True)
+    data[COLUMNA] = pd.to_datetime(data[COLUMNA])
     return data
-
-@st.cache
-def load_data_name(name):
-    datafiltered = load_data(500)
-    filtrar_data_nombre = datafiltered[datafiltered['name'].str.contains(name, flags=re.IGNORECASE)]  
-    return filtrar_data_nombre
-
-@st.cache
-def load_data_smartphone(smartphone):
-    data = load_data(500)
-    filtrar_data_smartphone = data[data['smartphone'] == smartphone]
-    return filtrar_data_smartphone
-
-
 st.sidebar.image('https://raw.githubusercontent.com/BryanVRe/Smartphone-Processors-Ranking-Scores/master/android.png')
 
-sidebar = st.sidebar
-agree = sidebar.checkbox("Mostrar todos los dispositivos")
-titulo = sidebar.text_input('Nombre del dispositivo:')
-btnFiltrarDirectorFilm = sidebar.button('Buscar dispositivo')
-data = load_data(500)
-selected = sidebar.selectbox("Seleccionar marca de dispositivo", data['smartphone'].unique())
-btnFiltrarDirector = sidebar.button('Filtrar por marca')
-
-if agree:
+checkbox_data = sidebar.checkbox("Mostrar todos los datos")
+if checkbox_data:
     estado = st.text('Cargando...')
-    data = load_data(500)
+    data = cargar_data(500)    
     estado.text("¡Cargado! (usando st.cache)")
+    st.subheader('Todos los datos')
     st.dataframe(data)
 
-if btnFiltrarDirectorFilm:
-    st.write ("Titulo buscado: "+ titulo)
-    filtrar = load_data_name(titulo)
-    filas = filtrar.shape[0]
-    st.write(f'Total de smartphones mostrados: {filas}')
-    st.dataframe(filtrar)
+checkbox_hora = sidebar.checkbox("Mostrar los datos por hora")
+if checkbox_hora:
+    estado = st.text('Cargando...')
+    data = cargar_data(500)
+    estado.text("¡Cargado! (usando st.cache)")
+    st.subheader('Numero de recorridos por hora')
+    values = np.histogram(data[COLUMNA].dt.hour, bins=24, range=(0,24))[0]
+    st.bar_chart(values)
 
-if btnFiltrarDirector: 
-    st.write("smartphone creadas por "+selected)
-    filtrar = load_data_smartphone(selected)
-    filas = filtrar.shape[0]
-    st.write(f'Total de Smartphone: {filas}')
-    st.dataframe(filtrar)
+
+filtro_hora = sidebar.slider('HORA', 0, 23, 17)
+if filtro_hora:
+    estado = st.text('Cargando...')
+    data = cargar_data(500)
+    estado.text("¡Cargado! (usando st.cache)")
+    data_rename = data.rename(columns = {'start_lat': 'lat', 'start_lng': 'lon'}, inplace = False)
+    filtrar_data = data_rename[data_rename[COLUMNA].dt.hour == filtro_hora]
+    st.subheader('Mapa de los recorridos iniciados a las %s:00' % filtro_hora)
+    st.map(filtrar_data)
+
+
