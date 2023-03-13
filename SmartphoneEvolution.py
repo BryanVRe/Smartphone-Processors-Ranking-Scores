@@ -1,6 +1,9 @@
 import pandas as pd
 import streamlit as st
 import re
+import matplotlib.pyplot as plt
+import plotly.express as px
+
 
 st.set_page_config(page_title="Smartphones", page_icon=":phone:")
 st.markdown("<h1 style='text-align: center; color: Orange;'>SMARTPHONES</h1>", unsafe_allow_html=True)
