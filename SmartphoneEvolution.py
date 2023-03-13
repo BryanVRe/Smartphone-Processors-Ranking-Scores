@@ -1,7 +1,6 @@
 import pandas as pd
 import streamlit as st
 import re
-import matplotlib.pyplot as plt
 import plotly.express as px
 
 st.set_page_config(page_title="Smartphones", page_icon=":phone:")
