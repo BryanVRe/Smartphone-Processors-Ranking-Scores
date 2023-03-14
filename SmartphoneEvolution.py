@@ -101,7 +101,7 @@ if st.sidebar.checkbox('Grafica de barras'):
 
 #diagrama de scatter1
 if st.sidebar.checkbox('scatter smartphone'):
-    st.subheader('scatter de paints')
+    st.subheader('scatter de Smartphones')
     imprint=data['Battery']
     years=data['Primary_Storage']
     rating=data['Display_Size']
