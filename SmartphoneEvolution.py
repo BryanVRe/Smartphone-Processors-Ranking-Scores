@@ -99,7 +99,7 @@ if st.sidebar.checkbox('Grafica de barras'):
 
     st.markdown("___")
 
-#diagrama de scatter
+#diagrama de scatter1
 if st.sidebar.checkbox('scatter smartphone'):
     st.subheader('scatter de paints')
     imprint=data['Battery']
