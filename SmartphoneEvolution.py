@@ -116,5 +116,3 @@ if st.sidebar.checkbox('scatter smartphone'):
 
 
 
-
-
