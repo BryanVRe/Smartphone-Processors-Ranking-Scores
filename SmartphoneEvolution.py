@@ -100,25 +100,20 @@ if st.sidebar.checkbox('Grafica de barras'):
     st.markdown("___")
 
 #diagrama de scatter
-if st.sidebar.checkbox('scatter de las smartphones'):
-    st.subheader('scatter de smartphones')
+if st.sidebar.checkbox('scatter smartphone'):
+    st.subheader('scatter de paints')
+    imprint=data['Battery']
+    years=data['Primary_Storage']
+    rating=data['Display_Size']
+    fig_age=px.scatter(data,
+                   x=imprint,
+                   y=rating,
+                   color=years, 
+                   title="comparacion de bateria, alamacenamiento y tamaño de display",
+                   labels=dict(Imprenta="imprint", years="years", print="Print"),
+                   template="plotly_white")
+    st.plotly_chart(fig_age)
 
-    fig, ax = plt.subplots()
-
-    x_pos = data['Battery']
-    y_pos = data['Primary_Storage']
-
-
-    ax.scatter(x_pos, y_pos,color = "orange")
-    ax.set_ylabel("Battery")
-    ax.set_xlabel("Storage")
-    ax.set_title('grafica de scatter')
-
-    st.header("scatter")
-
-    st.pyplot(fig)
-
-    st.markdown("___")
 
 
 
